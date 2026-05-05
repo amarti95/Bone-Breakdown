@@ -1,0 +1,63 @@
+{
+  "start_clip_id": "clip1",
+  "default_fail_clip_id": "clip1",
+  "clips": {
+    "clip1": {
+      "id": "clip1",
+      "video_path": "res://videos/clip1_jump_laser.ogv",
+      "on_finish_next_clip_id": "clip1",
+      "windows": [
+        {
+          "start_time_s": 0.85,
+          "end_time_s": 1.55,
+          "required_action": "UP",
+          "pause": true,
+          "slow_scale": 0.35,
+          "reaction_time_s": 0.75,
+          "success_next_clip_id": "clip2",
+          "fail_next_clip_id": "clip1"
+        }
+      ]
+    },
+    "clip2": {
+      "id": "clip2",
+      "video_path": "res://videos/clip2_duck.ogv",
+      "on_finish_next_clip_id": "clip1",
+      "windows": [
+        {
+          "start_time_s": 1.05,
+          "end_time_s": 1.85,
+          "required_action": "DOWN",
+          "pause": false,
+          "slow_scale": 0.35,
+          "reaction_time_s": 0.0,
+          "success_next_clip_id": "clip3",
+          "fail_next_clip_id": "clip2"
+        }
+      ]
+    },
+    "clip3": {
+      "id": "clip3",
+      "video_path": "res://videos/clip3_headthrow.ogv",
+      "on_finish_next_clip_id": "clip1",
+      "windows": [
+        {
+          "start_time_s": 0.75,
+          "end_time_s": 1.45,
+          "required_action": "ACTION",
+          "pause": true,
+          "slow_scale": 0.35,
+          "reaction_time_s": 0.75,
+          "success_next_clip_id": "clip4",
+          "fail_next_clip_id": "clip3"
+        }
+      ]
+    },
+    "clip4": {
+      "id": "clip4",
+      "video_path": "res://videos/clip4_exit.ogv",
+      "on_finish_next_clip_id": "clip1",
+      "windows": []
+    }
+  }
+}

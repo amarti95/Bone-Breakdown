@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://bjw61ose1u7yp"]
+
+[ext_resource type="Script" uid="uid://ct83yuda6fi1k" path="res://scripts/FmvPlayer.gd" id="1_7d3m0"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1"]
+font_size = 48
+outline_size = 6
+
+[node name="FmvPlayer" type="Control" unique_id=273324459]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_7d3m0")
+
+[node name="Video" type="VideoStreamPlayer" parent="." unique_id=502115069]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand = true
+
+[node name="Overlay" type="CanvasLayer" parent="." unique_id=264470712]
+
+[node name="Prompt" type="Control" parent="Overlay" unique_id=1435461671]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -160.0
+offset_right = 200.0
+offset_bottom = -40.0
+
+[node name="PromptLabel" type="Label" parent="Overlay/Prompt" unique_id=1859077520]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "PRESS ACTION"
+label_settings = SubResource("LabelSettings_1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DebugLabel" type="Label" parent="Overlay" unique_id=125218766]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 800.0
+offset_bottom = 120.0
+text = "debug"
