@@ -1,0 +1,158 @@
+[gd_resource type="Resource" script_class="FmvGameManifest" format=3 uid="uid://du5bco3qixya5"]
+
+[ext_resource type="Script" uid="uid://irrwa43o4i88" path="res://scripts/fmv/FmvGameManifest.gd" id="1_5f0r3"]
+[ext_resource type="Script" uid="uid://cj10chbjty75k" path="res://scripts/fmv/FmvRoom.gd" id="2_ba8q0"]
+[ext_resource type="Script" uid="uid://bue25eqv8m1oe" path="res://scripts/fmv/FmvClip.gd" id="3_1n1n0"]
+[ext_resource type="Script" uid="uid://bwutsw2hp3tll" path="res://scripts/fmv/FmvQteWindow.gd" id="4_4p3c2"]
+[ext_resource type="VideoStream" path="res://videos/rooms/starting/starting_placeholder.ogv" id="5_startph"]
+[ext_resource type="VideoStream" uid="uid://daw07fqqnle7w" path="res://videos/rooms/laser/clip1_jump_laser.ogv" id="6_k1"]
+[ext_resource type="VideoStream" uid="uid://bq1xhc4juirum" path="res://videos/rooms/laser/clip2_duck.ogv" id="7_k2"]
+[ext_resource type="VideoStream" uid="uid://dv72is0tqugwm" path="res://videos/rooms/laser/clip3_headthrow.ogv" id="8_k3"]
+[ext_resource type="VideoStream" uid="uid://ca0pwllkjtmfn" path="res://videos/rooms/laser/clip4_exit.ogv" id="9_k4"]
+[ext_resource type="VideoStream" uid="uid://bh215ejrp32hs" path="res://videos/rooms/starting/starting_room_1.ogv" id="10_sr1"]
+[ext_resource type="VideoStream" uid="uid://cu6uxmjqf3hgf" path="res://videos/rooms/starting/starting_room_2.ogv" id="11_sr2"]
+[ext_resource type="VideoStream" uid="uid://c7eotf06a8a71" path="res://videos/rooms/starting/starting_room_3.ogv" id="12_sr3"]
+
+[sub_resource type="Resource" id="Resource_qteStartingTutorial"]
+script = ExtResource("4_4p3c2")
+start_time_s = 1.25
+end_time_s = 2.5
+pause = false
+reaction_time_s = 0.0
+fail_next_clip_id = "starting_intro"
+
+[sub_resource type="Resource" id="Resource_clipStartingIntro"]
+script = ExtResource("3_1n1n0")
+id = "starting_intro"
+video = ExtResource("10_sr1")
+on_finish_next_clip_id = "starting_clip_2"
+windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_qteStartingTutorial")])
+
+[sub_resource type="Resource" id="Resource_clipStarting2"]
+script = ExtResource("3_1n1n0")
+id = "starting_clip_2"
+video = ExtResource("11_sr2")
+on_finish_next_clip_id = "starting_clip_3"
+
+[sub_resource type="Resource" id="Resource_clipStarting3"]
+script = ExtResource("3_1n1n0")
+id = "starting_clip_3"
+video = ExtResource("12_sr3")
+
+[sub_resource type="Resource" id="Resource_roomStarting"]
+script = ExtResource("2_ba8q0")
+id = "starting"
+display_name = "Starting"
+clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipStartingIntro"), SubResource("Resource_clipStarting2"), SubResource("Resource_clipStarting3")])
+start_clip_id = "starting_intro"
+
+[sub_resource type="Resource" id="Resource_qte1"]
+script = ExtResource("4_4p3c2")
+start_time_s = 0.85
+end_time_s = 1.55
+required_action = 0
+success_next_clip_id = "laser_clip2"
+fail_next_clip_id = "laser_clip1"
+
+[sub_resource type="Resource" id="Resource_clipLaser1"]
+script = ExtResource("3_1n1n0")
+id = "laser_clip1"
+video = ExtResource("6_k1")
+windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_qte1")])
+
+[sub_resource type="Resource" id="Resource_qte2"]
+script = ExtResource("4_4p3c2")
+start_time_s = 1.05
+end_time_s = 1.85
+required_action = 1
+pause = false
+reaction_time_s = 0.0
+success_next_clip_id = "laser_clip3"
+fail_next_clip_id = "laser_clip2"
+
+[sub_resource type="Resource" id="Resource_clipLaser2"]
+script = ExtResource("3_1n1n0")
+id = "laser_clip2"
+video = ExtResource("7_k2")
+windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_qte2")])
+
+[sub_resource type="Resource" id="Resource_qte3"]
+script = ExtResource("4_4p3c2")
+start_time_s = 0.75
+end_time_s = 1.45
+success_next_clip_id = "laser_clip4"
+fail_next_clip_id = "laser_clip3"
+
+[sub_resource type="Resource" id="Resource_clipLaser3"]
+script = ExtResource("3_1n1n0")
+id = "laser_clip3"
+video = ExtResource("8_k3")
+windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_qte3")])
+
+[sub_resource type="Resource" id="Resource_clipLaser4"]
+script = ExtResource("3_1n1n0")
+id = "laser_clip4"
+video = ExtResource("9_k4")
+
+[sub_resource type="Resource" id="Resource_roomLaser"]
+script = ExtResource("2_ba8q0")
+id = "laser"
+display_name = "Laser"
+clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipLaser1"), SubResource("Resource_clipLaser2"), SubResource("Resource_clipLaser3"), SubResource("Resource_clipLaser4")])
+start_clip_id = "laser_clip1"
+
+[sub_resource type="Resource" id="Resource_clipDronePlaceholder"]
+script = ExtResource("3_1n1n0")
+id = "drone_placeholder"
+video = ExtResource("5_startph")
+
+[sub_resource type="Resource" id="Resource_roomDrone"]
+script = ExtResource("2_ba8q0")
+id = "drone"
+display_name = "Drone"
+clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipDronePlaceholder")])
+start_clip_id = "drone_placeholder"
+
+[sub_resource type="Resource" id="Resource_clipLeverPlaceholder"]
+script = ExtResource("3_1n1n0")
+id = "lever_placeholder"
+video = ExtResource("5_startph")
+
+[sub_resource type="Resource" id="Resource_roomLever"]
+script = ExtResource("2_ba8q0")
+id = "lever"
+display_name = "Lever"
+clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipLeverPlaceholder")])
+start_clip_id = "lever_placeholder"
+
+[sub_resource type="Resource" id="Resource_clipHatchPlaceholder"]
+script = ExtResource("3_1n1n0")
+id = "hatch_placeholder"
+video = ExtResource("5_startph")
+
+[sub_resource type="Resource" id="Resource_roomHatch"]
+script = ExtResource("2_ba8q0")
+id = "hatch"
+display_name = "Hatch"
+clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipHatchPlaceholder")])
+start_clip_id = "hatch_placeholder"
+
+[sub_resource type="Resource" id="Resource_clipBossPlaceholder"]
+script = ExtResource("3_1n1n0")
+id = "boss_placeholder"
+video = ExtResource("5_startph")
+
+[sub_resource type="Resource" id="Resource_roomBoss"]
+script = ExtResource("2_ba8q0")
+id = "boss"
+display_name = "Boss"
+clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipBossPlaceholder")])
+start_clip_id = "boss_placeholder"
+
+[resource]
+script = ExtResource("1_5f0r3")
+rooms = Array[ExtResource("2_ba8q0")]([SubResource("Resource_roomStarting"), SubResource("Resource_roomLaser"), SubResource("Resource_roomDrone"), SubResource("Resource_roomLever"), SubResource("Resource_roomHatch"), SubResource("Resource_roomBoss")])
+room_order = Array[String](["starting", "drone", "lever", "hatch", "laser", "boss"])
+start_room_id = "starting"
+default_fail_room_id = "laser"
+default_fail_clip_id = "laser_clip1"
