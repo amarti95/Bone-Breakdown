@@ -1,19 +1,27 @@
-[gd_scene format=3 uid="uid://c0m1d1mau0m3n"]
+[gd_scene format=3 uid="uid://d4bpy1hshygp2"]
 
-[ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_menu"]
-[ext_resource type="Texture2D" path="res://Main Menu Background.jpg" id="2_bg"]
+[ext_resource type="Script" uid="uid://7r8h5q2bic6p" path="res://scripts/MainMenu.gd" id="1_menu"]
+[ext_resource type="Texture2D" uid="uid://dwxq3xlba26q2" path="res://Main Menu Background.jpg" id="2_bg"]
 
 [sub_resource type="Theme" id="Theme_1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 22.0
+content_margin_top = 18.0
+content_margin_right = 22.0
+content_margin_bottom = 18.0
+bg_color = Color(0, 0, 0, 0.55)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_size = 18
 
 [sub_resource type="LabelSettings" id="LabelSettings_title"]
 font_size = 72
 outline_size = 8
 
-[sub_resource type="LabelSettings" id="LabelSettings_sub"]
-font_size = 20
-outline_size = 2
-
-[node name="MainMenu" type="Control"]
+[node name="MainMenu" type="Control" unique_id=1223709362]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -23,7 +31,7 @@ grow_vertical = 2
 theme = SubResource("Theme_1")
 script = ExtResource("1_menu")
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=2141971539]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -32,7 +40,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.05, 0.05, 0.07, 1)
 
-[node name="BackgroundImage" type="TextureRect" parent="."]
+[node name="BackgroundImage" type="TextureRect" parent="." unique_id=1110730509]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -44,7 +52,17 @@ texture = ExtResource("2_bg")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="Content" type="VBoxContainer" parent="."]
+[node name="Dim" type="ColorRect" parent="." unique_id=470412464]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.25)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=572985467]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -55,39 +73,39 @@ offset_left = -260.0
 offset_top = -180.0
 offset_right = 260.0
 offset_bottom = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Content" type="VBoxContainer" parent="Panel" unique_id=2136588622]
+layout_mode = 2
 alignment = 1
 
-[node name="Title" type="Label" parent="Content"]
+[node name="Title" type="Label" parent="Panel/Content" unique_id=1836500153]
 layout_mode = 2
 text = "BONE BREAKDOWN"
 label_settings = SubResource("LabelSettings_title")
 horizontal_alignment = 1
 
-[node name="Spacer1" type="Control" parent="Content"]
-layout_mode = 2
+[node name="Spacer1" type="Control" parent="Panel/Content" unique_id=1686001959]
 custom_minimum_size = Vector2(0, 18)
-
-[node name="Subtitle" type="Label" parent="Content"]
 layout_mode = 2
-text = "Press Start to begin"
-label_settings = SubResource("LabelSettings_sub")
-horizontal_alignment = 1
 
-[node name="Spacer2" type="Control" parent="Content"]
-layout_mode = 2
+[node name="Spacer2" type="Control" parent="Panel/Content" unique_id=796485970]
 custom_minimum_size = Vector2(0, 26)
+layout_mode = 2
 
-[node name="Buttons" type="VBoxContainer" parent="Content"]
+[node name="Buttons" type="VBoxContainer" parent="Panel/Content" unique_id=493789787]
 layout_mode = 2
 alignment = 1
 
-[node name="StartButton" type="Button" parent="Content/Buttons"]
+[node name="StartButton" type="Button" parent="Panel/Content/Buttons" unique_id=474470025]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Start"
 
-[node name="QuitButton" type="Button" parent="Content/Buttons"]
+[node name="QuitButton" type="Button" parent="Panel/Content/Buttons" unique_id=2123139190]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Quit"
-
