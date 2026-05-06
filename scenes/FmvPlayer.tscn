@@ -39,6 +39,8 @@ offset_left = -200.0
 offset_top = -160.0
 offset_right = 200.0
 offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
 
 [node name="PromptLabel" type="Label" parent="Overlay/Prompt" unique_id=1964560598]
 layout_mode = 1

@@ -4,19 +4,18 @@
 [ext_resource type="Script" uid="uid://cj10chbjty75k" path="res://scripts/fmv/FmvRoom.gd" id="2_ba8q0"]
 [ext_resource type="Script" uid="uid://bue25eqv8m1oe" path="res://scripts/fmv/FmvClip.gd" id="3_1n1n0"]
 [ext_resource type="Script" uid="uid://bwutsw2hp3tll" path="res://scripts/fmv/FmvQteWindow.gd" id="4_4p3c2"]
-[ext_resource type="VideoStream" path="res://videos/rooms/starting/starting_placeholder.ogv" id="5_startph"]
-[ext_resource type="VideoStream" uid="uid://daw07fqqnle7w" path="res://videos/rooms/laser/clip1_jump_laser.ogv" id="6_k1"]
+[ext_resource type="VideoStream" uid="uid://daw07fqqnle7w" path="res://videos/rooms/starting/starting_placeholder.ogv" id="6_k1"]
 [ext_resource type="VideoStream" uid="uid://bq1xhc4juirum" path="res://videos/rooms/laser/clip2_duck.ogv" id="7_k2"]
 [ext_resource type="VideoStream" uid="uid://dv72is0tqugwm" path="res://videos/rooms/laser/clip3_headthrow.ogv" id="8_k3"]
 [ext_resource type="VideoStream" uid="uid://ca0pwllkjtmfn" path="res://videos/rooms/laser/clip4_exit.ogv" id="9_k4"]
 [ext_resource type="VideoStream" uid="uid://bh215ejrp32hs" path="res://videos/rooms/starting/starting_room_1.ogv" id="10_sr1"]
 [ext_resource type="VideoStream" uid="uid://cu6uxmjqf3hgf" path="res://videos/rooms/starting/starting_room_2.ogv" id="11_sr2"]
 [ext_resource type="VideoStream" uid="uid://c7eotf06a8a71" path="res://videos/rooms/starting/starting_room_3.ogv" id="12_sr3"]
-[ext_resource type="VideoStream" path="res://videos/rooms/drone/drone_hide_1.ogv" id="13_dr_hide"]
-[ext_resource type="VideoStream" path="res://videos/rooms/drone/drone_climb_2.ogv" id="14_dr_climb"]
-[ext_resource type="VideoStream" path="res://videos/rooms/drone/drone_wrench_3.ogv" id="15_dr_wrench"]
-[ext_resource type="VideoStream" path="res://videos/rooms/drone/drone_exit_4.ogv" id="16_dr_exit"]
-[ext_resource type="VideoStream" path="res://videos/rooms/drone/drone_fail.ogv" id="17_dr_fail"]
+[ext_resource type="VideoStream" uid="uid://c6v5rfpu2y7hq" path="res://videos/rooms/drone/drone_hide_1.ogv" id="13_dr_hide"]
+[ext_resource type="VideoStream" uid="uid://cvaxox2tuypvj" path="res://videos/rooms/drone/drone_climb_2.ogv" id="14_dr_climb"]
+[ext_resource type="VideoStream" uid="uid://b6fhgrj6v17bn" path="res://videos/rooms/drone/drone_wrench_3.ogv" id="15_dr_wrench"]
+[ext_resource type="VideoStream" uid="uid://dgo7abtk8txlw" path="res://videos/rooms/drone/drone_exit_4.ogv" id="16_dr_exit"]
+[ext_resource type="VideoStream" uid="uid://5s3ca6ss5vky" path="res://videos/rooms/drone/drone_fail.ogv" id="17_dr_fail"]
 
 [sub_resource type="Resource" id="Resource_qteStartingTutorial"]
 script = ExtResource("4_4p3c2")
@@ -111,8 +110,6 @@ script = ExtResource("4_4p3c2")
 start_time_s = 0.75
 end_time_s = 1.45
 required_action = 2
-pause = true
-reaction_time_s = 0.75
 success_next_clip_id = "drone_climb"
 fail_next_clip_id = "drone_fail"
 
@@ -124,11 +121,9 @@ windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_qteDroneHide")])
 
 [sub_resource type="Resource" id="Resource_qteDroneClimb"]
 script = ExtResource("4_4p3c2")
-start_time_s = 0.85
-end_time_s = 1.55
+start_time_s = 0.5
+end_time_s = 1.25
 required_action = 0
-pause = true
-reaction_time_s = 0.75
 success_next_clip_id = "drone_wrench"
 fail_next_clip_id = "drone_fail"
 
@@ -140,35 +135,35 @@ windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_qteDroneClimb")])
 
 [sub_resource type="Resource" id="Resource_qteDroneWrench"]
 script = ExtResource("4_4p3c2")
-start_time_s = 0.75
-end_time_s = 1.45
-required_action = 4
-pause = true
-reaction_time_s = 0.75
+start_time_s = 0.1
+end_time_s = 0.75
+required_action = 3
 success_next_clip_id = "drone_exit"
 fail_next_clip_id = "drone_fail"
 
 [sub_resource type="Resource" id="Resource_clipDroneWrench"]
 script = ExtResource("3_1n1n0")
 id = "drone_wrench"
-video = ExtResource("15_dr_wrench")
+video = ExtResource("16_dr_exit")
 windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_qteDroneWrench")])
+
+[sub_resource type="Resource" id="Resource_7pl6a"]
+script = ExtResource("4_4p3c2")
+start_time_s = 0.75
+end_time_s = 1.45
+metadata/_custom_type_script = "uid://bwutsw2hp3tll"
 
 [sub_resource type="Resource" id="Resource_clipDroneExit"]
 script = ExtResource("3_1n1n0")
 id = "drone_exit"
-video = ExtResource("16_dr_exit")
+video = ExtResource("15_dr_wrench")
+windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_7pl6a")])
 
 [sub_resource type="Resource" id="Resource_clipDroneFail"]
 script = ExtResource("3_1n1n0")
 id = "drone_fail"
 video = ExtResource("17_dr_fail")
 on_finish_next_clip_id = "drone_hide"
-
-[sub_resource type="Resource" id="Resource_clipDronePlaceholder"]
-script = ExtResource("3_1n1n0")
-id = "drone_placeholder"
-video = ExtResource("5_startph")
 
 [sub_resource type="Resource" id="Resource_roomDrone"]
 script = ExtResource("2_ba8q0")
@@ -180,7 +175,7 @@ start_clip_id = "drone_hide"
 [sub_resource type="Resource" id="Resource_clipLeverPlaceholder"]
 script = ExtResource("3_1n1n0")
 id = "lever_placeholder"
-video = ExtResource("5_startph")
+video = ExtResource("6_k1")
 
 [sub_resource type="Resource" id="Resource_roomLever"]
 script = ExtResource("2_ba8q0")
@@ -192,7 +187,7 @@ start_clip_id = "lever_placeholder"
 [sub_resource type="Resource" id="Resource_clipHatchPlaceholder"]
 script = ExtResource("3_1n1n0")
 id = "hatch_placeholder"
-video = ExtResource("5_startph")
+video = ExtResource("6_k1")
 
 [sub_resource type="Resource" id="Resource_roomHatch"]
 script = ExtResource("2_ba8q0")
@@ -204,7 +199,7 @@ start_clip_id = "hatch_placeholder"
 [sub_resource type="Resource" id="Resource_clipBossPlaceholder"]
 script = ExtResource("3_1n1n0")
 id = "boss_placeholder"
-video = ExtResource("5_startph")
+video = ExtResource("6_k1")
 
 [sub_resource type="Resource" id="Resource_roomBoss"]
 script = ExtResource("2_ba8q0")
