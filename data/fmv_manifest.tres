@@ -12,6 +12,11 @@
 [ext_resource type="VideoStream" uid="uid://bh215ejrp32hs" path="res://videos/rooms/starting/starting_room_1.ogv" id="10_sr1"]
 [ext_resource type="VideoStream" uid="uid://cu6uxmjqf3hgf" path="res://videos/rooms/starting/starting_room_2.ogv" id="11_sr2"]
 [ext_resource type="VideoStream" uid="uid://c7eotf06a8a71" path="res://videos/rooms/starting/starting_room_3.ogv" id="12_sr3"]
+[ext_resource type="VideoStream" path="res://videos/rooms/drone/drone_hide_1.ogv" id="13_dr_hide"]
+[ext_resource type="VideoStream" path="res://videos/rooms/drone/drone_climb_2.ogv" id="14_dr_climb"]
+[ext_resource type="VideoStream" path="res://videos/rooms/drone/drone_wrench_3.ogv" id="15_dr_wrench"]
+[ext_resource type="VideoStream" path="res://videos/rooms/drone/drone_exit_4.ogv" id="16_dr_exit"]
+[ext_resource type="VideoStream" path="res://videos/rooms/drone/drone_fail.ogv" id="17_dr_fail"]
 
 [sub_resource type="Resource" id="Resource_qteStartingTutorial"]
 script = ExtResource("4_4p3c2")
@@ -101,6 +106,65 @@ display_name = "Laser"
 clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipLaser1"), SubResource("Resource_clipLaser2"), SubResource("Resource_clipLaser3"), SubResource("Resource_clipLaser4")])
 start_clip_id = "laser_clip1"
 
+[sub_resource type="Resource" id="Resource_qteDroneHide"]
+script = ExtResource("4_4p3c2")
+start_time_s = 0.75
+end_time_s = 1.45
+required_action = 2
+pause = true
+reaction_time_s = 0.75
+success_next_clip_id = "drone_climb"
+fail_next_clip_id = "drone_fail"
+
+[sub_resource type="Resource" id="Resource_clipDroneHide"]
+script = ExtResource("3_1n1n0")
+id = "drone_hide"
+video = ExtResource("13_dr_hide")
+windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_qteDroneHide")])
+
+[sub_resource type="Resource" id="Resource_qteDroneClimb"]
+script = ExtResource("4_4p3c2")
+start_time_s = 0.85
+end_time_s = 1.55
+required_action = 0
+pause = true
+reaction_time_s = 0.75
+success_next_clip_id = "drone_wrench"
+fail_next_clip_id = "drone_fail"
+
+[sub_resource type="Resource" id="Resource_clipDroneClimb"]
+script = ExtResource("3_1n1n0")
+id = "drone_climb"
+video = ExtResource("14_dr_climb")
+windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_qteDroneClimb")])
+
+[sub_resource type="Resource" id="Resource_qteDroneWrench"]
+script = ExtResource("4_4p3c2")
+start_time_s = 0.75
+end_time_s = 1.45
+required_action = 4
+pause = true
+reaction_time_s = 0.75
+success_next_clip_id = "drone_exit"
+fail_next_clip_id = "drone_fail"
+
+[sub_resource type="Resource" id="Resource_clipDroneWrench"]
+script = ExtResource("3_1n1n0")
+id = "drone_wrench"
+video = ExtResource("15_dr_wrench")
+windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_qteDroneWrench")])
+
+[sub_resource type="Resource" id="Resource_clipDroneExit"]
+script = ExtResource("3_1n1n0")
+id = "drone_exit"
+video = ExtResource("16_dr_exit")
+
+[sub_resource type="Resource" id="Resource_clipDroneFail"]
+script = ExtResource("3_1n1n0")
+id = "drone_fail"
+video = ExtResource("17_dr_fail")
+on_finish_next_clip_id = "drone_hide"
+
 [sub_resource type="Resource" id="Resource_clipDronePlaceholder"]
 script = ExtResource("3_1n1n0")
 id = "drone_placeholder"
@@ -110,8 +174,8 @@ video = ExtResource("5_startph")
 script = ExtResource("2_ba8q0")
 id = "drone"
 display_name = "Drone"
-clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipDronePlaceholder")])
-start_clip_id = "drone_placeholder"
+clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipDroneHide"), SubResource("Resource_clipDroneClimb"), SubResource("Resource_clipDroneWrench"), SubResource("Resource_clipDroneExit"), SubResource("Resource_clipDroneFail")])
+start_clip_id = "drone_hide"
 
 [sub_resource type="Resource" id="Resource_clipLeverPlaceholder"]
 script = ExtResource("3_1n1n0")
