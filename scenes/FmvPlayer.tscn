@@ -2,10 +2,30 @@
 
 [ext_resource type="Script" uid="uid://ct83yuda6fi1k" path="res://scripts/FmvPlayer.gd" id="1_7d3m0"]
 [ext_resource type="Resource" uid="uid://du5bco3qixya5" path="res://data/fmv_manifest.tres" id="2_manifest"]
+[ext_resource type="Shader" uid="uid://b5plru2gpx2wu" path="res://shaders/vhs_screen.gdshader" id="3_vhs"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vhs"]
+shader = ExtResource("3_vhs")
+shader_parameter/smearing = 0.5
+shader_parameter/color_offset = 0.005
+shader_parameter/sharpening = 0.4
+shader_parameter/static_noise = 0.08
+shader_parameter/crack_center = Vector2(0.15, 0.85)
+shader_parameter/crack_intensity = 0.0
+shader_parameter/crack_size = 0.0
+shader_parameter/vertical_jitter = 0.002
+shader_parameter/scanline_opacity = 0.1
+shader_parameter/vignette_intensity = 0.3
 
 [sub_resource type="LabelSettings" id="LabelSettings_1"]
 font_size = 48
 outline_size = 6
+
+[sub_resource type="LabelSettings" id="LabelSettings_clip_time"]
+font_size = 22
+font_color = Color(0.88, 0.94, 1, 0.95)
+outline_size = 4
+outline_color = Color(0, 0, 0, 0.88)
 
 [node name="FmvPlayer" type="Control" unique_id=1298800215]
 layout_mode = 3
@@ -16,6 +36,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7d3m0")
 manifest = ExtResource("2_manifest")
+qte_timeline_lag_compensation_s = 0.2
+qte_wall_grace_after_clip_switch_s = 0.055
 
 [node name="Video" type="VideoStreamPlayer" parent="." unique_id=1612738164]
 layout_mode = 1
@@ -26,7 +48,20 @@ grow_horizontal = 2
 grow_vertical = 2
 expand = true
 
+[node name="VhsLayer" type="CanvasLayer" parent="." unique_id=902000001]
+visible = false
+
+[node name="VhsPost" type="ColorRect" parent="VhsLayer" unique_id=902000002]
+material = SubResource("ShaderMaterial_vhs")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
 [node name="Overlay" type="CanvasLayer" parent="." unique_id=223034830]
+layer = 128
 
 [node name="Prompt" type="Control" parent="Overlay" unique_id=1722009334]
 layout_mode = 3
@@ -55,9 +90,27 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="DebugLabel" type="Label" parent="Overlay" unique_id=1512340513]
-visible = false
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 800.0
 offset_bottom = 120.0
 text = "debug"
+
+[node name="ClipTimeHud" type="MarginContainer" parent="Overlay" unique_id=442692652]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -320.0
+offset_top = 16.0
+offset_right = -20.0
+offset_bottom = 72.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="ClipTimeLabel" type="Label" parent="Overlay/ClipTimeHud" unique_id=1476517181]
+layout_mode = 2
+theme_override_constants/line_spacing = 2
+text = "-"
+label_settings = SubResource("LabelSettings_clip_time")
+horizontal_alignment = 2
