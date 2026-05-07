@@ -1,10 +1,5 @@
 extends Control
 
-const FmvGameManifest := preload("res://scripts/fmv/FmvGameManifest.gd")
-const FmvRoom := preload("res://scripts/fmv/FmvRoom.gd")
-const FmvClip := preload("res://scripts/fmv/FmvClip.gd")
-const FmvQteWindow := preload("res://scripts/fmv/FmvQteWindow.gd")
-
 const _SCRUB_FINE_STEP_S := 1.0 / 24.0
 const _SCRUB_COARSE_STEP_S := 0.25
 

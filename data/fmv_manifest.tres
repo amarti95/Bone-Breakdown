@@ -177,23 +177,34 @@ display_name = "Laser"
 clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipLaser1"), SubResource("Resource_clipLaser2"), SubResource("Resource_clipLaser3"), SubResource("Resource_clipLaser4")])
 start_clip_id = "laser_clip1"
 
+[sub_resource type="Resource" id="Resource_qteIdleLever"]
+script = ExtResource("4_4p3c2")
+start_time_s = 0.0
+end_time_s = 5.87
+required_action = 4
+pause = false
+slow_scale = 1.0
+reaction_time_s = 0.0
+success_next_clip_id = "flick_lever"
+fail_next_clip_id = "walk_lever"
+
 [sub_resource type="Resource" id="Resource_clipLeverIdle"]
 script = ExtResource("3_1n1n0")
 id = "idle_lever"
 video = ExtResource("16_y0yab")
-on_finish_next_clip_id = "walk_lever"
+windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_qteIdleLever")])
 
 [sub_resource type="Resource" id="Resource_clipLeverWalk"]
 script = ExtResource("3_1n1n0")
 id = "walk_lever"
 video = ExtResource("18_lv_walk")
-on_finish_next_clip_id = "flick_lever"
+on_finish_next_clip_id = "die_lever"
 
 [sub_resource type="Resource" id="Resource_clipLeverDie"]
 script = ExtResource("3_1n1n0")
 id = "die_lever"
 video = ExtResource("19_lv_die")
-on_finish_next_clip_id = "idle_lever"
+on_finish_next_clip_id = "hatch_lever"
 
 [sub_resource type="Resource" id="Resource_clipLeverFlick"]
 script = ExtResource("3_1n1n0")
