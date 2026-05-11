@@ -239,17 +239,17 @@ display_name = "Lever"
 clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipLeverIdle"), SubResource("Resource_clipLeverWalk"), SubResource("Resource_clipLeverDie"), SubResource("Resource_clipLeverFlick"), SubResource("Resource_clipLeverHatch")])
 start_clip_id = "idle_lever"
 
-[sub_resource type="Resource" id="Resource_clipHatchPlaceholder"]
+[sub_resource type="Resource" id="Resource_clipTombPlaceholder"]
 script = ExtResource("3_1n1n0")
-id = "hatch_placeholder"
+id = "tomb_placeholder"
 video = ExtResource("6_k1")
 
-[sub_resource type="Resource" id="Resource_roomHatch"]
+[sub_resource type="Resource" id="Resource_roomTomb"]
 script = ExtResource("2_ba8q0")
-id = "hatch"
-display_name = "Hatch"
-clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipHatchPlaceholder")])
-start_clip_id = "hatch_placeholder"
+id = "tomb"
+display_name = "Tomb"
+clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipTombPlaceholder")])
+start_clip_id = "tomb_placeholder"
 
 [sub_resource type="Resource" id="Resource_clipBossPlaceholder"]
 script = ExtResource("3_1n1n0")
@@ -265,8 +265,8 @@ start_clip_id = "boss_placeholder"
 
 [resource]
 script = ExtResource("1_5f0r3")
-rooms = Array[ExtResource("2_ba8q0")]([SubResource("Resource_roomStarting"), SubResource("Resource_roomDrone"), SubResource("Resource_roomLaser"), SubResource("Resource_roomLever"), SubResource("Resource_roomHatch"), SubResource("Resource_roomBoss")])
-room_order = Array[String](["starting", "drone", "lever", "hatch", "laser", "boss"])
+rooms = Array[ExtResource("2_ba8q0")]([SubResource("Resource_roomStarting"), SubResource("Resource_roomDrone"), SubResource("Resource_roomLaser"), SubResource("Resource_roomLever"), SubResource("Resource_roomTomb"), SubResource("Resource_roomBoss")])
+room_order = Array[String](["starting", "drone", "lever", "tomb", "laser", "boss"])
 start_room_id = "starting"
 default_fail_room_id = "laser"
 default_fail_clip_id = "laser_fail"
