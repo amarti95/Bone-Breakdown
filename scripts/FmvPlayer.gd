@@ -23,10 +23,13 @@ const _SCRUB_COARSE_STEP_S := 0.25
 ## Top-right HUD: current clip id and integrated playback clock (matches QTE `start_time_s` authoring).
 @export var show_clip_time_overlay: bool = true
 
+## Height of the keyboard-key prompt shown during QTE windows.
+@export var prompt_icon_height: float = 72.0
+
 @onready var overlay: CanvasLayer = $Overlay
 @onready var video: VideoStreamPlayer = $Video
 @onready var prompt_root: Control = $Overlay/Prompt
-@onready var prompt_label: Label = $Overlay/Prompt/PromptLabel
+@onready var prompt_icon: TextureRect = $Overlay/Prompt/PromptIcon
 @onready var debug_label: Label = $Overlay/DebugLabel
 @onready var clip_time_hud: Control = $Overlay/ClipTimeHud
 @onready var clip_time_label: Label = $Overlay/ClipTimeHud/ClipTimeLabel
@@ -243,7 +246,7 @@ func _begin_qte(w: FmvQteWindow) -> void:
 	_window_resolved = false
 	_qte_open = true
 
-	prompt_label.text = _action_to_text(w.required_action)
+	_set_prompt_for_action(w.required_action)
 	prompt_root.visible = true
 
 	if w.pause:
@@ -366,18 +369,31 @@ func _branch_fail() -> void:
 		next_id = fallback_clip
 	_play_clip(next_id)
 
+func _set_prompt_for_action(action: int) -> void:
+	if prompt_icon == null:
+		return
+	var icon := QteInputKeyIconLibrary.texture_for_action(action)
+	prompt_icon.texture = icon
+	if icon == null:
+		prompt_icon.custom_minimum_size = Vector2.ZERO
+		return
+	var display_size := QteInputKeyIconLibrary.display_size_for_action(action, prompt_icon_height)
+	prompt_icon.custom_minimum_size = display_size
+	prompt_icon.size = display_size
+
+
 func _action_to_text(a: int) -> String:
 	match a:
 		FmvQteWindow.Action.UP:
-			return "UP"
+			return "W"
 		FmvQteWindow.Action.DOWN:
-			return "DOWN"
+			return "S"
 		FmvQteWindow.Action.LEFT:
-			return "LEFT"
+			return "A"
 		FmvQteWindow.Action.RIGHT:
-			return "RIGHT"
+			return "D"
 		FmvQteWindow.Action.ACTION:
-			return "ACTION"
+			return "SPACE"
 		_:
 			return "?"
 

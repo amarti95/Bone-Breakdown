@@ -21,6 +21,7 @@
 [ext_resource type="VideoStream" uid="uid://bjqiac78s5vef" path="res://videos/rooms/lever/dieLever2.ogv" id="19_lv_die"]
 [ext_resource type="VideoStream" uid="uid://cd450av7nnhqm" path="res://videos/rooms/lever/flickLever4.ogv" id="20_lv_flick"]
 [ext_resource type="VideoStream" uid="uid://bhshdnsh5krpu" path="res://videos/rooms/lever/hatchLever5.ogv" id="21_lv_hatch"]
+[ext_resource type="VideoStream" path="res://videos/rooms/laser/laser_fail.ogv" id="22_ls_fail"]
 
 [sub_resource type="Resource" id="Resource_qteStartingTutorial"]
 script = ExtResource("4_4p3c2")
@@ -128,7 +129,7 @@ start_time_s = 0.85
 end_time_s = 1.55
 required_action = 0
 success_next_clip_id = "laser_clip2"
-fail_next_clip_id = "laser_clip1"
+fail_next_clip_id = "laser_fail"
 
 [sub_resource type="Resource" id="Resource_clipLaser1"]
 script = ExtResource("3_1n1n0")
@@ -144,7 +145,7 @@ required_action = 1
 pause = false
 reaction_time_s = 0.0
 success_next_clip_id = "laser_clip3"
-fail_next_clip_id = "laser_clip2"
+fail_next_clip_id = "laser_fail"
 
 [sub_resource type="Resource" id="Resource_clipLaser2"]
 script = ExtResource("3_1n1n0")
@@ -157,7 +158,7 @@ script = ExtResource("4_4p3c2")
 start_time_s = 0.75
 end_time_s = 1.45
 success_next_clip_id = "laser_clip4"
-fail_next_clip_id = "laser_clip3"
+fail_next_clip_id = "laser_fail"
 
 [sub_resource type="Resource" id="Resource_clipLaser3"]
 script = ExtResource("3_1n1n0")
@@ -170,21 +171,25 @@ script = ExtResource("3_1n1n0")
 id = "laser_clip4"
 video = ExtResource("9_k4")
 
+[sub_resource type="Resource" id="Resource_clipLaserFail"]
+script = ExtResource("3_1n1n0")
+id = "laser_fail"
+video = ExtResource("22_ls_fail")
+on_finish_next_clip_id = "laser_clip1"
+
 [sub_resource type="Resource" id="Resource_roomLaser"]
 script = ExtResource("2_ba8q0")
 id = "laser"
 display_name = "Laser"
-clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipLaser1"), SubResource("Resource_clipLaser2"), SubResource("Resource_clipLaser3"), SubResource("Resource_clipLaser4")])
+clips = Array[ExtResource("3_1n1n0")]([SubResource("Resource_clipLaser1"), SubResource("Resource_clipLaser2"), SubResource("Resource_clipLaser3"), SubResource("Resource_clipLaser4"), SubResource("Resource_clipLaserFail")])
 start_clip_id = "laser_clip1"
 
 [sub_resource type="Resource" id="Resource_qteIdleLever"]
 script = ExtResource("4_4p3c2")
-start_time_s = 0.0
 end_time_s = 5.87
-required_action = 4
+required_action = 3
 pause = false
 slow_scale = 1.0
-reaction_time_s = 0.0
 success_next_clip_id = "flick_lever"
 fail_next_clip_id = "walk_lever"
 
@@ -204,13 +209,23 @@ on_finish_next_clip_id = "die_lever"
 script = ExtResource("3_1n1n0")
 id = "die_lever"
 video = ExtResource("19_lv_die")
-on_finish_next_clip_id = "hatch_lever"
+on_finish_next_clip_id = "idle_lever"
+
+[sub_resource type="Resource" id="Resource_db7e5"]
+script = ExtResource("4_4p3c2")
+end_time_s = 2.0
+pause = false
+slow_scale = 1.0
+success_next_clip_id = "hatch_lever"
+fail_next_clip_id = "die_lever"
+metadata/_custom_type_script = "uid://bwutsw2hp3tll"
 
 [sub_resource type="Resource" id="Resource_clipLeverFlick"]
 script = ExtResource("3_1n1n0")
 id = "flick_lever"
 video = ExtResource("20_lv_flick")
 on_finish_next_clip_id = "hatch_lever"
+windows = Array[ExtResource("4_4p3c2")]([SubResource("Resource_db7e5")])
 
 [sub_resource type="Resource" id="Resource_clipLeverHatch"]
 script = ExtResource("3_1n1n0")
@@ -254,4 +269,4 @@ rooms = Array[ExtResource("2_ba8q0")]([SubResource("Resource_roomStarting"), Sub
 room_order = Array[String](["starting", "drone", "lever", "hatch", "laser", "boss"])
 start_room_id = "starting"
 default_fail_room_id = "laser"
-default_fail_clip_id = "laser_clip1"
+default_fail_clip_id = "laser_fail"
