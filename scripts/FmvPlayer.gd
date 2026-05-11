@@ -2,6 +2,7 @@ extends Control
 
 const _SCRUB_FINE_STEP_S := 1.0 / 24.0
 const _SCRUB_COARSE_STEP_S := 0.25
+const _GAME_OVER_SCENE_PATH := "res://scenes/GameOver.tscn"
 
 @export var manifest: FmvGameManifest
 
@@ -33,6 +34,7 @@ const _SCRUB_COARSE_STEP_S := 0.25
 @onready var debug_label: Label = $Overlay/DebugLabel
 @onready var clip_time_hud: Control = $Overlay/ClipTimeHud
 @onready var clip_time_label: Label = $Overlay/ClipTimeHud/ClipTimeLabel
+@onready var lives_label: Label = $Overlay/LivesHud/LivesLabel
 
 var _room_map: Dictionary = {}
 var _clip_map: Dictionary = {}
@@ -46,6 +48,7 @@ var _qte_reaction_deadline_usec: int = 0
 var _fired_windows: Dictionary = {}
 var _ignore_finished: bool = false
 var _pending_success_next_clip_id: String = ""
+var _pending_game_over_after_clip: bool = false
 var _clip_to_room_id: Dictionary = {}
 
 var _clip_browser: Control
@@ -82,6 +85,10 @@ func _ready() -> void:
 
 	if clip_time_hud != null:
 		clip_time_hud.visible = show_clip_time_overlay
+
+	if not GameLives.lives_changed.is_connected(_on_lives_changed):
+		GameLives.lives_changed.connect(_on_lives_changed)
+	_update_lives_hud()
 
 	video.finished.connect(_on_video_finished)
 	_play_clip(entry_clip_id)
@@ -359,15 +366,41 @@ func _branch_fail() -> void:
 	_restore_playback_normal()
 	_end_qte_keep_playing()
 	_active_window = null
+
+	GameLives.lose_life()
+	_update_lives_hud()
+	_pending_game_over_after_clip = not GameLives.has_lives_remaining()
+
 	var next_id := w.fail_next_clip_id if w != null else ""
 	if next_id == "":
-		# Use manifest defaults if the window doesn't specify a fail target.
 		var fallback_room := manifest.default_fail_room_id if manifest != null else _current_room_id
 		var fallback_clip := manifest.default_fail_clip_id if manifest != null else ""
 		if fallback_clip.is_empty():
 			fallback_clip = _get_room_start_clip_id(fallback_room)
 		next_id = fallback_clip
+	if next_id.is_empty():
+		push_error("FmvPlayer: no failure clip to play for room '%s'." % _current_room_id)
+		_go_to_game_over()
+		return
 	_play_clip(next_id)
+
+
+func _on_lives_changed(_lives: int) -> void:
+	_update_lives_hud()
+
+
+func _update_lives_hud() -> void:
+	if lives_label == null:
+		return
+	lives_label.text = "Lives: %d" % GameLives.lives
+
+
+func _go_to_game_over() -> void:
+	_pending_game_over_after_clip = false
+	_close_clip_browser()
+	prompt_root.visible = false
+	video.stop()
+	get_tree().change_scene_to_file(_GAME_OVER_SCENE_PATH)
 
 func _set_prompt_for_action(action: int) -> void:
 	if prompt_icon == null:
@@ -418,6 +451,15 @@ func _update_debug(t: float) -> void:
 
 func _on_video_finished() -> void:
 	if _ignore_finished:
+		return
+	if _pending_game_over_after_clip:
+		var finished_clip: FmvClip = _clip_map.get(_current_clip_id)
+		var next_id := finished_clip.on_finish_next_clip_id if finished_clip != null else ""
+		var room_start := _get_room_start_clip_id(_current_room_id)
+		if next_id.is_empty() or next_id == room_start:
+			_go_to_game_over()
+			return
+		_play_clip(next_id)
 		return
 	if _pending_success_next_clip_id != "":
 		var ok_id := _pending_success_next_clip_id
@@ -544,6 +586,7 @@ func _jump_to_clip(clip_id: String) -> void:
 		return
 	if _clip_to_room_id.has(clip_id):
 		_current_room_id = String(_clip_to_room_id[clip_id])
+	_pending_game_over_after_clip = false
 	_play_clip(clip_id)
 
 

@@ -23,6 +23,12 @@ font_color = Color(0.88, 0.94, 1, 0.95)
 outline_size = 4
 outline_color = Color(0, 0, 0, 0.88)
 
+[sub_resource type="LabelSettings" id="LabelSettings_lives"]
+font_size = 28
+font_color = Color(1, 0.92, 0.88, 0.98)
+outline_size = 5
+outline_color = Color(0, 0, 0, 0.88)
+
 [node name="FmvPlayer" type="Control" unique_id=1298800215]
 layout_mode = 3
 anchors_preset = 15
@@ -79,6 +85,19 @@ texture_filter = 1
 layout_mode = 2
 expand_mode = 1
 stretch_mode = 5
+
+[node name="LivesHud" type="MarginContainer" parent="Overlay" unique_id=442692653]
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 16.0
+offset_right = 220.0
+offset_bottom = 56.0
+mouse_filter = 2
+
+[node name="LivesLabel" type="Label" parent="Overlay/LivesHud" unique_id=1476517182]
+layout_mode = 2
+text = "Lives: 3"
+label_settings = SubResource("LabelSettings_lives")
 
 [node name="DebugLabel" type="Label" parent="Overlay" unique_id=1512340513]
 offset_left = 16.0

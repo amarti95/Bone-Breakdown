@@ -19,6 +19,10 @@ run/main_scene="res://scenes/MainMenu.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+GameLives="*res://scripts/GameLives.gd"
+
 [display]
 
 window/size/viewport_width=1920

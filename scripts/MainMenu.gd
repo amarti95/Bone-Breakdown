@@ -18,6 +18,7 @@ func _on_start_pressed() -> void:
 	if start_scene_path.is_empty():
 		push_error("MainMenu: start_scene_path is empty.")
 		return
+	GameLives.reset_for_new_run()
 	get_tree().change_scene_to_file(start_scene_path)
 
 func _on_quit_pressed() -> void:
