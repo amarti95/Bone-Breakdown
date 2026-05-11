@@ -24,12 +24,12 @@ const _SCRUB_COARSE_STEP_S := 0.25
 @export var show_clip_time_overlay: bool = true
 
 ## Height of the keyboard-key prompt shown during QTE windows.
-@export var prompt_icon_height: float = 72.0
+@export var prompt_icon_height: float = 96.0
 
 @onready var overlay: CanvasLayer = $Overlay
 @onready var video: VideoStreamPlayer = $Video
 @onready var prompt_root: Control = $Overlay/Prompt
-@onready var prompt_icon: TextureRect = $Overlay/Prompt/PromptIcon
+@onready var prompt_icon: TextureRect = $Overlay/Prompt/CenterContainer/PromptIcon
 @onready var debug_label: Label = $Overlay/DebugLabel
 @onready var clip_time_hud: Control = $Overlay/ClipTimeHud
 @onready var clip_time_label: Label = $Overlay/ClipTimeHud/ClipTimeLabel
@@ -377,9 +377,7 @@ func _set_prompt_for_action(action: int) -> void:
 	if icon == null:
 		prompt_icon.custom_minimum_size = Vector2.ZERO
 		return
-	var display_size := QteInputKeyIconLibrary.display_size_for_action(action, prompt_icon_height)
-	prompt_icon.custom_minimum_size = display_size
-	prompt_icon.size = display_size
+	prompt_icon.custom_minimum_size = QteInputKeyIconLibrary.display_size_for_action(action, prompt_icon_height)
 
 
 func _action_to_text(a: int) -> String:
